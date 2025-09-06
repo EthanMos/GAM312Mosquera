@@ -8,6 +8,11 @@ APlayerChar::APlayerChar()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	PlayerCamComp = CreateDefaultSubobject<UCameraComponent>(TEXT("First Person Cam")); // Create first person camera
+
+	PlayerCamComp->SetupAttachment(GetMesh(), "head"); // Attach camera to player's head
+
+	PlayerCamComp->bUsePawnControlRotation = true; // Rotate camera with pawn
 
 }
 
@@ -29,6 +34,48 @@ void APlayerChar::Tick(float DeltaTime)
 void APlayerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	// Inputs call functions
+	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerChar::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerChar::MoveRight);
+	PlayerInputComponent->BindAxis("LookUp", this, &APlayerChar::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("Turn", this, &APlayerChar::AddControllerYawInput);
+	PlayerInputComponent->BindAction("JumpEvent", IE_Pressed, this, &APlayerChar::StartJump);
+	PlayerInputComponent->BindAction("JumpEvent", IE_Released, this, &APlayerChar::StopJump);
+
+}
+
+// Rotate and move based on input
+void APlayerChar::MoveForward(float axisValue)
+{
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(Direction, axisValue);
+
+}
+
+void APlayerChar::MoveRight(float axisValue)
+{
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(Direction, axisValue);
+
+}
+
+// Jump based on input press
+void APlayerChar::StartJump()
+{
+	bPressedJump = true;
+
+}
+
+void APlayerChar::StopJump()
+{
+	bPressedJump = false;
+
+}
+
+void APlayerChar::FindObject()
+{
+
 
 }
 
