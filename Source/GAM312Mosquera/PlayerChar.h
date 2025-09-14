@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Resource_M.h"
+#include "Kismet/GameplayStatics.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -27,21 +29,74 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// Move on the x and y axes functions initialization
 	UFUNCTION()
-		void MoveForward(float axisValue); // Move on the x axis function initialization
+		void MoveForward(float axisValue);
 
 	UFUNCTION()
-		void MoveRight(float axisValue); // Move on the y axis function initialization
+		void MoveRight(float axisValue);
+
+	// Start and stop jump function initialization
+	UFUNCTION()
+		void StartJump();
 
 	UFUNCTION()
-		void StartJump(); // Start jump function initialization
+		void StopJump();
 
-	UFUNCTION()
-		void StopJump(); // Stop jump function initialization
-
+	// Find object fun ction initialization
 	UFUNCTION()
 		void FindObject();
 
+	// Add camera component as PlayerCamComp
 	UPROPERTY(VisibleAnywhere)
-		UCameraComponent* PlayerCamComp; // Add camera component as PlayerCamComp
+		UCameraComponent* PlayerCamComp;
+
+	// Player stat initialization
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+		float Health = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+		float Hunger = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+		float Stamina = 100.0f;
+
+	// Resource values initialization
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Wood;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Stone;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Berry;
+
+	// Resource array index and name initialization
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+		TArray<int> ResourcesArray;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		TArray<FString> ResourcesNameArray;
+
+	// Hit decal material initialization
+	UPROPERTY(EditAnywhere, Category = "Hit Marker")
+		UMaterialInterface* hitDecal;
+
+	// Set player stat function initialization
+	UFUNCTION(BlueprintCallable)
+		void SetHealth(float amount);
+
+	UFUNCTION(BlueprintCallable)
+		void SetHunger(float amount);
+
+	UFUNCTION(BlueprintCallable)
+		void SetStamina(float amount);
+
+	UFUNCTION()
+		void DecreaseStats();
+
+	// Add resource to array function initialization
+	UFUNCTION()
+		void GiveResource(float amount, FString resourceType);
+
 };
