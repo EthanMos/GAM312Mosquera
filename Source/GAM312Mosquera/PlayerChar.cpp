@@ -45,6 +45,9 @@ void APlayerChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Updates player's stats to player widget every tick
+	playerUI->UpdateBars(Health, Hunger, Stamina);
+
 	// Checks if player is building
 	if (isBuilding)
 	{
@@ -132,7 +135,7 @@ void APlayerChar::FindObject()
 			AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor());
 
 			// Add resource to inventory if stamina is greater than five
-			if (Stamina > 5.0f)
+			if (Stamina >= 5.0f)
 			{
 
 				// Check if a resource was hit

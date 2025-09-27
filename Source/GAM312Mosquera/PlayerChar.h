@@ -8,6 +8,7 @@
 #include "Resource_M.h"
 #include "Kismet/GameplayStatics.h"
 #include "BuildingPart.h"
+#include "PlayerWidget.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -98,6 +99,10 @@ public:
 	// Current part being built
 	UPROPERTY()
 		ABuildingPart* spawnedPart;
+
+	// Player widget reference
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UPlayerWidget* playerUI;
 
 	// Set player stats function initialization
 	UFUNCTION(BlueprintCallable)
