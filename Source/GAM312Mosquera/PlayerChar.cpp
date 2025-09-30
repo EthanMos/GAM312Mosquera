@@ -38,6 +38,13 @@ void APlayerChar::BeginPlay()
 	FTimerHandle StatsTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
 
+	// If the objective widget exists set the objectives for mats collected and builds built
+	if (objWidget)
+	{
+		objWidget->UpdateMatsObj(0.0f);
+		objWidget->UpdateBuildsObj(0.0f);
+
+	}
 }
 
 // Called every frame
@@ -154,6 +161,10 @@ void APlayerChar::FindObject()
 						// Add resource to inventory
 						GiveResource(resourceValue, hitName);
 
+						// Tracks resources collected in the objectives widget
+						matsCollected = matsCollected + resourceValue;
+						objWidget->UpdateMatsObj(matsCollected);
+
 						// Display debug line showing that the resource is being collected
 						check(GEngine != nullptr);
 						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
@@ -184,6 +195,10 @@ void APlayerChar::FindObject()
 	{
 		// When player interacts while building is true, set building to false
 		isBuilding = false;
+
+		// Updates the amount on objects built when player builds in the objectives widget
+		objectsBuilt = objectsBuilt + 1.0f;
+		objWidget->UpdateBuildsObj(objectsBuilt);
 
 	}
 }
