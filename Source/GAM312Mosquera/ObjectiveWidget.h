@@ -21,4 +21,5 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void UpdateBuildsObj(float objectsBuilt);
+
 };

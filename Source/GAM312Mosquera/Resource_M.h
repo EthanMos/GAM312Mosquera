@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/TextRenderComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Resource_M.generated.h"
 
@@ -25,6 +24,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Resource stats
 	UPROPERTY(EditAnywhere)
 		FString resourceName = "Wood";
 		
@@ -34,12 +34,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		int totalResource = 100;
 
-	UPROPERTY()
-		FText  tempText;
-
-	UPROPERTY(EditAnywhere)
-		UTextRenderComponent* ResourceNameTxt;
-
+	// Mesh
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* Mesh;
 
