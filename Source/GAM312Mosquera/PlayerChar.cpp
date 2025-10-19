@@ -313,7 +313,7 @@ void APlayerChar::UpdateResource(float woodAmount, float stoneAmount, FString bu
 
 			}
 
-			if (buildingObject == "Ceiling")
+			if (buildingObject == "Stairs")
 			{
 				BuildingArray[2] = BuildingArray[2] + 1;
 
